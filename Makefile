@@ -24,3 +24,6 @@ tinker:
 
 db:
 	docker-compose exec mysql mysql -uroot -proot
+
+clone-data:
+	docker-compose exec api php artisan movie:scan
