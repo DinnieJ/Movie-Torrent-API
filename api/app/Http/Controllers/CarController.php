@@ -26,9 +26,9 @@ class CarController extends BaseController
 
     public function createCar(Request $request)
     {
-        $model = $request->get('model');
-        $year = $request->get('year');
-        dd($model);
+        $model = $request->post('model');
+        $year = $request->post('year');
+
         $newCar = $this->carRepository->create([
             'model' => $model,
             'year' => $year
@@ -56,17 +56,12 @@ class CarController extends BaseController
         return $car;
     }
 
-    public function updateCar(Request $request)
-    {
-        $id = $request->get('id');
-        $model = $request->get('model');
-    }
 
     public function deleteCar(Request $request)
     {
         $id = $request->get('id');
         $car = $this->carRepository->find($id);
-        if($car){
+        if ($car) {
             $car->delete();
 
             return response()->json([
@@ -75,6 +70,29 @@ class CarController extends BaseController
         }
         return response()->json([
             'message' => 'Not found'
+        ]);
+    }
+
+    public function updateCar(Request $request)
+    {
+        $id = $request->get('id');
+        $model = $request->get('model');
+        $year = $request->get('year');
+
+        $car_model = $this->carRepository->find($id);
+        if($car_model){
+//            $car_model->model = $model;
+//            $car_model->year = $year;
+//            $car_model->save();
+            $car_model->model = $model;
+            $car_model->year = $year;
+            $car_model->save();
+
+
+            return \response()->json($car_model , 200);
+        }
+        return \response()->json([
+            "message" => "Not Found"
         ]);
     }
 
