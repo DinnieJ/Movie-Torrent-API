@@ -38,3 +38,12 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('/user', 'AuthController@info');
     });
 });
+Route::group(['prefix'=> 'car'], function (){
+
+
+    Route::get('/all','CarController@getAllCar');
+    Route::get('/detail','CarController@getCar');
+    Route::post('/create','CarController@createCar');
+    Route::delete('/delete','CarController@deleteCar');
+
+});

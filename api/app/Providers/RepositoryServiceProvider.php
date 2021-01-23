@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Car\CarRepository;
+use App\Repositories\Car\CarRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Movie\MovieRepositoryInterface;
 use App\Repositories\Movie\MovieRepository;
@@ -41,6 +43,10 @@ class RepositoryServiceProvider extends ServiceProvider
             [
                 FavoriteRepository::class,
                 FavoriteRepositoryInterface::class
+            ],
+            [
+                CarRepository::class,
+                CarRepositoryInterface::class
             ]
         ];
 
