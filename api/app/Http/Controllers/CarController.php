@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Repositories\Car\CarRepository;
-use App\Repositories\Car\CarRepositoryInterface;
-use http\Env\Response;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Input\Input;
 
 
 class CarController extends BaseController
@@ -34,15 +31,15 @@ class CarController extends BaseController
             'year' => $year
         ]);
 
-        return $newCar;
+        return \response()->json($newCar, 201);
 
     }
 
     public function getAllCar(Request $request)
     {
         $cars = $this->carRepository->all();
-        dd($cars);
-        return $cars;
+
+        return \response()->json($cars, 200);
     }
 
     public function getCar(Request $request)
@@ -51,9 +48,9 @@ class CarController extends BaseController
         $id = $request->get('id');
         $car = $this->carRepository->find($id);
         if (!$car) {
-            return null;
+            return \response()->json(null, 404);
         }
-        return $car;
+        return \response()->json($car, 200);
     }
 
 
@@ -79,21 +76,16 @@ class CarController extends BaseController
         $model = $request->get('model');
         $year = $request->get('year');
 
-        $car_model = $this->carRepository->find($id);
-        if($car_model){
-//            $car_model->model = $model;
-//            $car_model->year = $year;
-//            $car_model->save();
-            $car_model->model = $model;
-            $car_model->year = $year;
-            $car_model->save();
-
-
-            return \response()->json($car_model , 200);
+        $car = $this->carRepository->update([
+            'model' => $model,
+            'year' => $year
+        ], $id);
+        if (!$car) {
+            return \response()->json(null, 404);
         }
-        return \response()->json([
-            "message" => "Not Found"
-        ]);
+
+        return \response()->json($car, 200);
+
     }
 
 
