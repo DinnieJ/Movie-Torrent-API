@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\Car\CreateCarRequest;
+use App\Http\Requests\Car\UpdateCarRequest;
+use App\Http\Resources\Car\CarDetailResource;
 use App\Repositories\Car\CarRepository;
 use Illuminate\Http\Request;
 
@@ -21,10 +24,11 @@ class CarController extends BaseController
         $this->carRepository = $carRepository;
     }
 
-    public function createCar(Request $request)
+    public function createCar(CreateCarRequest $request)
     {
         $model = $request->post('model');
         $year = $request->post('year');
+
 
         $newCar = $this->carRepository->create([
             'model' => $model,
@@ -39,7 +43,7 @@ class CarController extends BaseController
     {
         $cars = $this->carRepository->all();
 
-        return \response()->json($cars, 200);
+        return \response()->json(CarDetailResource::collection($cars), 200); //param cars is a Collection - so we use CarDetailResource:collection
     }
 
     public function getCar(Request $request)
@@ -70,11 +74,12 @@ class CarController extends BaseController
         ]);
     }
 
-    public function updateCar(Request $request)
+    public function updateCar(UpdateCarRequest $request)
     {
         $id = $request->get('id');
         $model = $request->get('model');
         $year = $request->get('year');
+        if($year)
 
         $car = $this->carRepository->update([
             'model' => $model,
