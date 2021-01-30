@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\Car\CreateCarRequest;
+use App\Http\Requests\Car\DeleteCarRequest;
+use App\Http\Requests\Car\DetailCarRequest;
 use App\Http\Requests\Car\UpdateCarRequest;
 use App\Http\Resources\Car\CarDetailResource;
 use App\Repositories\Car\CarRepository;
@@ -46,7 +48,7 @@ class CarController extends BaseController
         return \response()->json(CarDetailResource::collection($cars), 200); //param cars is a Collection - so we use CarDetailResource:collection
     }
 
-    public function getCar(Request $request)
+    public function getCar(DetailCarRequest $request)
     {
 
         $id = $request->get('id');
@@ -54,11 +56,11 @@ class CarController extends BaseController
         if (!$car) {
             return \response()->json(null, 404);
         }
-        return \response()->json($car, 200);
+        return \response()->json(new CarDetailResource($car), 200);
     }
 
 
-    public function deleteCar(Request $request)
+    public function deleteCar(DeleteCarRequest $request)
     {
         $id = $request->get('id');
         $car = $this->carRepository->find($id);
