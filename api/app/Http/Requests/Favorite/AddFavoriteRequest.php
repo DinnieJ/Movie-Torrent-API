@@ -26,7 +26,7 @@ class AddFavoriteRequest extends FormRequest
     public function rules()
     {
         return [
-            'movie_id' => 'required|integer|exists:movie,movie_id'
+            'movie_id' => 'integer|exists:movie,movie_id'
         ];
     }
 

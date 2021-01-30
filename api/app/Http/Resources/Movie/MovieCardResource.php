@@ -19,6 +19,7 @@ class MovieCardResource extends JsonResource
             'title' => $this['title'],
             'cover' => $this['cover_img'],
             'rating' =>$this['rating'],
+            'favorited_by_user' => isset($this['favorites']) ? \count($this['favorites']) > 0 : false,
             'detail' => $this->getDetailUrl()
         ];
     }

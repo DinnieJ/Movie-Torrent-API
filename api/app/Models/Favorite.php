@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Favorite extends Model
 {
@@ -14,4 +15,9 @@ class Favorite extends Model
         'user_id',
         'movie_id'
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id', 'user_id');
+    }
 }

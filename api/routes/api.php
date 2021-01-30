@@ -18,17 +18,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['prefix' => 'movie'], function () {
-    Route::get('/all', 'MovieController@getAll');
+    Route::get('/', 'MovieController@getAll');
     Route::get('/detail/{id}', 'MovieController@getMovie');
-
+    Route::get('/random', 'MovieController@getRandomFive');
+    Route::get('/search', 'MovieController@searchMovie');
     Route::group(['middleware' => 'auth.jwt'], function () {
-        Route::get('/userfavorite', 'MovieController@getUserMovie');
+        Route::get('/user-favorite', 'MovieController@getUserMovie');
     });
 });
 
 Route::group(['prefix' => 'favorite', 'middleware' => 'auth.jwt'], function () {
     Route::post('/add', 'FavoriteController@addFavorite');
     Route::post('/remove', 'FavoriteController@removeFavorite');
+});
+
+Route::group(['prefix' => 'comment', 'middleware' => 'auth.jwt'], function () {
+    Route::post('/add', 'CommentController@addComment');
 });
 
 Route::group(['prefix' => 'auth'], function () {
@@ -38,3 +43,5 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('/user', 'AuthController@info');
     });
 });
+
+Route::get('/testshit', 'MovieController@testMovie');

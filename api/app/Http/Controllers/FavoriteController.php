@@ -18,15 +18,15 @@ class FavoriteController extends BaseController
 
     public function addFavorite(AddFavoriteRequest $request)
     {
-        $data = $request->only(['movie_id']);
+        $movie_id = $request->get('movie_id');
         $user_id = $this->getAuthUser()->id;
         $favorite = $this->favoriteRepository->findWhere([
-            'movie_id' => $data['movie_id'],
+            'movie_id' => $movie_id,
             'user_id' => $user_id
         ])->first();
         if (!$favorite) {
             $newFavorite = $this->favoriteRepository->create([
-                'movie_id' => $data['movie_id'],
+                'movie_id' => $movie_id,
                 'user_id' => $user_id
             ]);
     
@@ -48,14 +48,12 @@ class FavoriteController extends BaseController
 
     public function removeFavorite(AddFavoriteRequest $request)
     {
-        $movie_id = $request->movie_id;
+        $movie_id = $request->get('movie_id');
         $user_id = $this->getAuthUser()->id;
-
         $favorite = $this->favoriteRepository->findWhere([
             'movie_id' => $movie_id,
             'user_id' => $user_id
         ])->first();
-
         if ($favorite) {
             $favorite->delete();
             

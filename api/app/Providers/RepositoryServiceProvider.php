@@ -9,6 +9,8 @@ use App\Repositories\Torrent\TorrentRepositoryInterface;
 use App\Repositories\Torrent\TorrentRepository;
 use App\Repositories\Favorite\FavoriteRepository;
 use App\Repositories\Favorite\FavoriteRepositoryInterface;
+use App\Repositories\Comment\CommentRepository;
+use App\Repositories\Comment\CommentRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -41,6 +43,10 @@ class RepositoryServiceProvider extends ServiceProvider
             [
                 FavoriteRepository::class,
                 FavoriteRepositoryInterface::class
+            ],
+            [
+                CommentRepository::class,
+                CommentRepositoryInterface::class
             ]
         ];
 

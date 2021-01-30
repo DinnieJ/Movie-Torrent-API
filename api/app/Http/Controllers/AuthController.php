@@ -25,20 +25,19 @@ class AuthController extends BaseController
             ], 401);
         }
 
+        $user = JWTAuth::user($token);
+
         return response()->json([
             'status' => true,
+            'user' => $user,
             'token' => $token,
-        ]);
+        ], 200);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
-
         try {
-            JWTAuth::invalidate($request->token);
+            auth()->logout();
 
             return response()->json([
                 'status' => true,

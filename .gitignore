@@ -1,1 +1,2 @@
 docker/mysql
+docker/nginx/log/*

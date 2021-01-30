@@ -13,6 +13,7 @@ status:
 build:
 	cp .env.development .env
 	docker-compose build
+	docker-compose up -d
 	docker-compose exec api composer install
 	docker-compose exec api php artisan migrate
 	docker-compose exec api php artisan key:generate
@@ -27,3 +28,6 @@ db:
 
 clone-data:
 	docker-compose exec api php artisan movie:scan
+
+migrate:
+	docker-compose exec api php artisan migrate
